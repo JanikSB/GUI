@@ -1,0 +1,6 @@
+101 101 8 Beamer_&_Whiteboard
+102 102 2 Whiteboard
+103 103 5 Whiteboard_&_Beamer
+104 104 4 Whiteboard
+105 105 4 Whiteboard
+106 106 1 Whiteboard

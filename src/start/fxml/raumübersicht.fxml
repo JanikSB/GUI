@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="750.0" maxWidth="1295.0" minHeight="750.0" minWidth="1295.0" prefHeight="750.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="start.controller.ControllerRaumuebersicht">
+   <children>
+      <VBox prefHeight="750.0" prefWidth="378.0" style="-fx-background-color: #E20074;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="241.0" prefWidth="378.0">
+               <children>
+                  <Label layoutX="102.0" layoutY="63.0" text="T-Systems" textFill="WHITE">
+                     <font>
+                        <Font name="TeleLogo" size="45.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="55.0" layoutY="128.0" prefHeight="23.0" prefWidth="269.0" text="Raumreservierung Standort Kassel" textFill="WHITE">
+                     <font>
+                        <Font name="TeleNeo Office Regular" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button mnemonicParsing="false" prefHeight="93.0" prefWidth="416.0" style="-fx-background-color: #ca1f7b;" text="Übersicht der Räume" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <DropShadow height="255.0" radius="63.25" width="0.0" />
+               </effect>
+            </Button>
+            <Pane prefHeight="49.0" prefWidth="378.0" />
+            <Button fx:id="raumReservierenScene" mnemonicParsing="false" onAction="#raumReSwitch" prefHeight="93.0" prefWidth="378.0" style="-fx-background-color: #ca1f7b;" text="Raum reservieren" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Pane prefHeight="49.0" prefWidth="378.0" />
+            <Button fx:id="profilScene" mnemonicParsing="false" onAction="#profilSwitch" prefHeight="93.0" prefWidth="378.0" style="-fx-background-color: #ca1f7b;" text="Profil" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+      <BorderPane layoutX="378.0" prefHeight="750.0" prefWidth="918.0">
+         <top>
+            <VBox prefHeight="174.0" prefWidth="927.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="94.0" prefWidth="917.0">
+                     <children>
+                        <Label fx:id="DatumHeute" layoutX="52.0" layoutY="32.0" prefHeight="23.0" prefWidth="137.0">
+                           <font>
+                              <Font name="TeleNeo Office Regular" size="19.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
+                  <Pane prefHeight="83.0" prefWidth="918.0" style="-fx-background-color: #dbdbdb;">
+                     <children>
+                        <Label layoutX="323.0" layoutY="22.0" text="Übersicht der Räume">
+                           <font>
+                              <Font name="TeleNeo Office Bold" size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <Pane prefHeight="560.0" prefWidth="918.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="571.0" fitWidth="640.0" layoutX="142.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Räume.PNG" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="raum3Info" layoutX="171.0" layoutY="22.0" mnemonicParsing="false" onAction="#raum3Action" prefHeight="155.0" prefWidth="277.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="raum4Info" layoutX="480.0" layoutY="22.0" mnemonicParsing="false" onAction="#raum4Action" prefHeight="155.0" prefWidth="277.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="Raum2Info" layoutX="171.0" layoutY="211.0" mnemonicParsing="false" onAction="#raum2Action" prefHeight="80.0" prefWidth="224.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="raum5Info" layoutX="525.0" layoutY="211.0" mnemonicParsing="false" onAction="#raum5Action" prefHeight="153.0" prefWidth="225.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="raum1Info" layoutX="171.0" layoutY="324.0" mnemonicParsing="false" onAction="#raum1Action" prefHeight="208.0" prefWidth="232.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="raum6Info" layoutX="527.0" layoutY="391.0" mnemonicParsing="false" onAction="#raum6Action" prefHeight="99.0" prefWidth="223.0" style="-fx-opacity: 0;">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

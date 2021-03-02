@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="750.0" maxWidth="1295.0" minHeight="750.0" minWidth="1295.0" prefHeight="750.0" prefWidth="1295.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="750.0" prefWidth="378.0" style="-fx-background-color: #E20074;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="241.0" prefWidth="378.0">
+               <children>
+                  <Label layoutX="102.0" layoutY="63.0" text="T-Systems" textFill="WHITE">
+                     <font>
+                        <Font name="TeleLogo" size="45.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="55.0" layoutY="128.0" prefHeight="23.0" prefWidth="269.0" text="Raumreservierung Standort Kassel" textFill="WHITE">
+                     <font>
+                        <Font name="TeleNeo Office Regular" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="raumReKnopfRaum" mnemonicParsing="false" onAction="#raumSwitch" prefHeight="93.0" prefWidth="416.0" style="-fx-background-color: #ca1f7b;" text="Übersicht der Räume" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Pane prefHeight="49.0" prefWidth="378.0" />
+            <Button mnemonicParsing="false" prefHeight="93.0" prefWidth="378.0" style="-fx-background-color: #ca1f7b;" text="Raum reservieren" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <DropShadow height="255.0" radius="63.25" width="0.0" />
+               </effect>
+            </Button>
+            <Pane prefHeight="49.0" prefWidth="378.0" />
+            <Button fx:id="raumReKnopfProfil" mnemonicParsing="false" onAction="#profilSwitch" prefHeight="93.0" prefWidth="378.0" style="-fx-background-color: #ca1f7b;" text="Profil" textFill="WHITE">
+               <font>
+                  <Font name="Tele-GroteskFet" size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </VBox>
+      <BorderPane layoutX="378.0" prefHeight="750.0" prefWidth="918.0">
+         <top>
+            <VBox prefHeight="174.0" prefWidth="927.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane prefHeight="94.0" prefWidth="917.0">
+                     <children>
+                        <Label fx:id="raumReDatum" layoutX="52.0" layoutY="32.0" prefHeight="23.0" prefWidth="105.0" text="01.01.2021">
+                           <font>
+                              <Font name="TeleNeo Office Regular" size="19.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
+                  <Pane prefHeight="83.0" prefWidth="918.0" style="-fx-background-color: #dbdbdb;">
+                     <children>
+                        <Label layoutX="346.0" layoutY="22.0" text="Raum reservieren">
+                           <font>
+                              <Font name="TeleNeo Office Bold" size="32.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </top>
+         <center>
+            <Pane prefHeight="560.0" prefWidth="918.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="576.0" prefWidth="918.0">
+                     <children>
+                        <Pane prefHeight="107.0" prefWidth="918.0">
+                           <children>
+                              <Label layoutX="486.0" layoutY="69.0" text="Von:">
+                                 <font>
+                                    <Font name="TeleNeo Office Regular" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="199.0" layoutY="69.0" text="Wann:">
+                                 <font>
+                                    <Font name="TeleNeo Office Regular" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="763.0" layoutY="68.0" prefHeight="16.0" prefWidth="19.0" text="Bis:">
+                                 <font>
+                                    <Font name="TeleNeo Office Regular" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="fehlerDatum" contentDisplay="CENTER" layoutX="347.0" layoutY="32.0" textAlignment="CENTER" textFill="RED">
+                                 <font>
+                                    <Font name="TeleNeo Office Medium" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children></Pane>
+                        <Pane prefHeight="65.0" prefWidth="918.0" style="-fx-background-color: #dbdbdb;">
+                           <children>
+                              <DatePicker fx:id="reservierenDatum" layoutX="132.0" layoutY="8.0" />
+                              <Spinner fx:id="reservierenAbUhr" layoutX="427.0" layoutY="8.0" />
+                              <Spinner fx:id="reservierenBisUhr" layoutX="704.0" layoutY="8.0" />
+                           </children></Pane>
+                        <Pane prefHeight="475.0" prefWidth="918.0">
+                           <children>
+                              <Button fx:id="reservierenKnopf" layoutX="649.0" layoutY="96.0" mnemonicParsing="false" onAction="#reservierenOnAction" prefHeight="62.0" prefWidth="140.0" text="Reservieren">
+                                 <font>
+                                    <Font name="TeleNeo Office Regular" size="22.0" />
+                                 </font>
+                              </Button>
+                              <TableView fx:id="tabelleDaten" layoutX="55.0" layoutY="14.0" prefHeight="225.0" prefWidth="546.0">
+                                <columns>
+                                  <TableColumn fx:id="reservierenRaumnummer" prefWidth="189.0" text="Raumnummer" />
+                                  <TableColumn fx:id="tableReservierenAusstattung" minWidth="0.0" prefWidth="280.0" text="Ausstattung" />
+                                    <TableColumn fx:id="tableReservierenPlaetze" prefWidth="75.0" text="Plätze" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="alleReservierungen" layoutX="85.0" layoutY="269.0" mnemonicParsing="false" onAction="#alleReservierungenAnsehen" prefHeight="23.0" prefWidth="252.0" text="Alle Reservierungen ansehen">
+                                 <font>
+                                    <Font name="TeleNeo Office Regular" size="19.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

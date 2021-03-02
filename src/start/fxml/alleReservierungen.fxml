@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="385.0" prefWidth="587.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane layoutX="164.0" layoutY="65.0" prefHeight="385.0" prefWidth="587.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <Pane prefHeight="74.0" prefWidth="587.0" style="-fx-background-color: #824974;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="146.0" layoutY="10.0" text="Reservierungen" textFill="WHITE">
+                     <font>
+                        <Font name="TeleNeo Office ExtraBold" size="46.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <TableView fx:id="tabelleAlleReservierungen" prefHeight="311.0" prefWidth="524.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="columnRaum" prefWidth="120.0" text="RAUM" />
+                <TableColumn fx:id="columnDatum" minWidth="4.0" prefWidth="140.0" text="Datum:" />
+                  <TableColumn fx:id="columnVon" prefWidth="137.0" text="Von:" />
+                  <TableColumn fx:id="columnBis" prefWidth="121.0" text="Bis:" />
+              </columns>
+            </TableView>
+         </center>
+         <left>
+            <Pane prefHeight="311.0" prefWidth="34.0" style="-fx-background-color: #824974;" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Pane prefHeight="311.0" prefWidth="34.0" style="-fx-background-color: #824974;" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </children>
+</AnchorPane>
