@@ -96,7 +96,7 @@ public class ControllerRaumuebersicht {
 //---Raum und Datum:---
     public void initialize(){
         DatumHeute.setText(datum);
-        raumOeffner();
+        //raumOeffner();
     }
 //---------------------------
 
@@ -137,9 +137,18 @@ public class ControllerRaumuebersicht {
         stage.showAndWait();
     }
 
+    private final int[] benutzt = new int[1];
+
 
     //--------------------------------------Raum 1------------------------------
     public void raum1Action(ActionEvent event) {
+
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
+
+
         raumUeberschrift.setText("Raum 1");
         anzahlPlatz.setText("8");
         eigenschaften.setText("Beamer und Whiteboard");
@@ -150,6 +159,10 @@ public class ControllerRaumuebersicht {
 
     //--------------------------------------Raum 2------------------------------
     public void raum2Action(ActionEvent event) {
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
         raumUeberschrift.setText("Raum 2");
         anzahlPlatz.setText("2");
         eigenschaften.setText("Whiteboard");
@@ -160,7 +173,10 @@ public class ControllerRaumuebersicht {
 
     //--------------------------------------Raum 3------------------------------
     public void raum3Action(ActionEvent event) {
-
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
         raumUeberschrift.setText("Raum 3");
         anzahlPlatz.setText("5");
         eigenschaften.setText("Beamer und Whiteboard");
@@ -171,7 +187,10 @@ public class ControllerRaumuebersicht {
 
     //--------------------------------------Raum 4------------------------------
     public void raum4Action(ActionEvent event) {
-
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
         raumUeberschrift.setText("Raum 4");
         anzahlPlatz.setText("4");
         eigenschaften.setText("Whiteboard");
@@ -182,6 +201,10 @@ public class ControllerRaumuebersicht {
 
     //--------------------------------------Raum 5------------------------------
     public void raum5Action(ActionEvent event) {
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
         raumUeberschrift.setText("Raum 5");
         anzahlPlatz.setText("4");
         eigenschaften.setText("Whiteboard");
@@ -191,7 +214,10 @@ public class ControllerRaumuebersicht {
 
     //--------------------------------------Raum 6------------------------------
     public void raum6Action(ActionEvent event) {
-
+        if (benutzt [0] == 0){
+            raumOeffner();
+            benutzt [0] = 1;
+        }
         raumUeberschrift.setText("Raum 6");
         anzahlPlatz.setText("1");
         eigenschaften.setText("Whiteboard");
