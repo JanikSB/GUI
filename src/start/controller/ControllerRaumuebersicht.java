@@ -96,7 +96,6 @@ public class ControllerRaumuebersicht {
 //---Raum und Datum:---
     public void initialize(){
         DatumHeute.setText(datum);
-        //raumOeffner();
     }
 //---------------------------
 
@@ -116,7 +115,7 @@ public class ControllerRaumuebersicht {
     public void raumOeffner(){
 
         try {
-            loaderRaFe.setController(this);                                                     //WARUM LÄD ER ZWEIMAL ???? (Beeinträchtigt nichts)
+            loaderRaFe.setController(this);
             Parent alertBoxScene = loaderRaFe.load();
             stage.setTitle("");
             stage.setScene(new Scene(alertBoxScene));
