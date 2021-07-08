@@ -12,10 +12,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import start.normaleKlassen.AlleReservierungen;
+import start.normaleKlassen.Datenbank;
 import start.normaleKlassen.Mitarbeiter;
 import start.normaleKlassen.Szenenwechsel;
 
 import java.io.*;
+import java.sql.*;
 
 public class ControllerAnmeldung {
 
@@ -62,11 +64,24 @@ public class ControllerAnmeldung {
             id =  Integer.parseInt(idStr);
             String passwort = passwortfeld.getText();
 
-            if (Mitarbeiter.mitarbeiterMap.get(id).getPasswort().matches(passwort)) {
+            String passwortCheck = "";
+
+            try (Connection con = DriverManager.getConnection(Datenbank.dbURL); Statement stmt = con.createStatement();) {
+                String checken = ("SELECT Passwort FROM dbo.Mitarbeiter WHERE MitarbeiterID = "+id);
+                ResultSet resultSet = stmt.executeQuery(checken);
+
+                if (resultSet.next()) {
+                    passwortCheck = resultSet.getString("Passwort");
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+
+            if (passwort.matches(passwortCheck)) {
                 angemeldet(event);
                 idSpeichern();
             } else {
-                fehleranzeige.setText("E-Mail Adresse und Passwort stimmen nicht überein!");
+                fehleranzeige.setText("ID und Passwort stimmen nicht überein!");
             }
         } else fehleranzeige.setText("Die ID wurde falsch eingegeben!");
     }
@@ -75,27 +90,7 @@ public class ControllerAnmeldung {
 
     //------------------ID in Datei speichern--------------
         private void idSpeichern(){
-            File idDatei = new File("src/start/resources/id.txt");
-
-            try {
-                idDatei.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            FileWriter writer = null;
-
-            PrintWriter printWriter = null;
-            try {
-                printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/start/resources/id.txt", true)));
-                printWriter.println(id);
-                printWriter.flush();
-                printWriter.close();
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Mitarbeiter.idZwischenspeicher.add(id);
         }
      //------------------------------------------------------
 

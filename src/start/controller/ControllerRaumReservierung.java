@@ -12,16 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import start.normaleKlassen.Raum;
-import start.normaleKlassen.AlleReservierungen;
-import start.normaleKlassen.Szenenwechsel;
+import start.normaleKlassen.*;
 
 import java.io.*;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Scanner;
+import java.util.Random;
 
 public class ControllerRaumReservierung {
 
@@ -257,7 +256,7 @@ public class ControllerRaumReservierung {
 
     private void weiterReservieren() throws IOException { // -> in "checkVerfügbarkeit()" -> in "zeitZuweisen()"
 
-        reservierungInHashmap();    //funktioniert (& in ArrayList hashkey speichern)
+        reservierungInDatenbank();    //funktioniert (& in ArrayList hashkey speichern)
         alertBoxScene();            //alertBox bei erfolgreicher Registrierung (switch nur Scene)
     }
 //----------------------------------------------------------------------------------------
@@ -271,6 +270,8 @@ public class ControllerRaumReservierung {
 
     private ObservableList<AlleReservierungen> getAlles(){
         String raumnummer = "";
+        Date vonDatum = new Date();
+        Date bisDatum = new Date();
         String datum = "";
         String von = "";
         String bis = "";
@@ -278,18 +279,47 @@ public class ControllerRaumReservierung {
 
         ObservableList<AlleReservierungen> alle = FXCollections.observableArrayList();
 
-        int i = 0;
-        while (i < AlleReservierungen.reservierungenArrayList.size()){
-            String hashkey = AlleReservierungen.reservierungenArrayList.get(i);
-            raumnummer = AlleReservierungen.reservierungenHashMap.get(hashkey).getRaumnummer();
-            datum = AlleReservierungen.reservierungenHashMap.get(hashkey).getDatum();
-            von = AlleReservierungen.reservierungenHashMap.get(hashkey).getVon();
-            bis = AlleReservierungen.reservierungenHashMap.get(hashkey).getBis();
+//        int i = 0;
+//        while (i < AlleReservierungen.reservierungenArrayList.size()){
+//
+//            String hashkey = AlleReservierungen.reservierungenArrayList.get(i);
+//            raumnummer = AlleReservierungen.reservierungenHashMap.get(hashkey).getRaumnummer();
+//            datum = AlleReservierungen.reservierungenHashMap.get(hashkey).getDatum();
+//            von = AlleReservierungen.reservierungenHashMap.get(hashkey).getVon();
+//            bis = AlleReservierungen.reservierungenHashMap.get(hashkey).getBis();
+//
+//            mitarbeiterID = AlleReservierungen.reservierungenHashMap.get(hashkey).getMitarbeiterId();
+//            alle.add(new AlleReservierungen(raumnummer, mitarbeiterID, datum, von, bis));
+//
+//            i++;
+//        }
+//        return  alle;
 
-            mitarbeiterID = AlleReservierungen.reservierungenHashMap.get(hashkey).getMitarbeiterId();
-            alle.add(new AlleReservierungen(raumnummer, mitarbeiterID, datum, von, bis));
+        SimpleDateFormat uhrzeit = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat datumFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-            i++;
+
+        try (Connection con = DriverManager.getConnection(Datenbank.dbURL); Statement stmt = con.createStatement();) {
+            String query = ("SELECT * FROM dbo.Reservierungen");
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                raumnummer = resultSet.getString("Raumnummer");
+                vonDatum = resultSet.getDate("UhrzeitVon");
+                bisDatum = resultSet.getDate("UhrzeitBis");
+                mitarbeiterID = Mitarbeiter.idZwischenspeicher.get(0).toString();
+
+                von = uhrzeit.format(vonDatum);
+                bis = uhrzeit.format(bisDatum);
+                datum = datumFormat.format(vonDatum);
+
+                alle.add(new AlleReservierungen(raumnummer, mitarbeiterID, datum, von, bis));
+
+                //DATENTYPEN ÜBERARBEITEN!!! - 01.07. gemacht
+
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
         return  alle;
     }
@@ -378,17 +408,79 @@ public class ControllerRaumReservierung {
 
 
         String check;
-        String zeitDatum;
-        String zeitBeginn;
-        String zeitEnde;
+//        String zeitDatum;
+//        String zeitBeginn;
+//        String zeitEnde;
         Date dateiDatumAb;
         Date dateiDatumBis;
 
-        String hashkey;
+//        String hashkey;
 
         int i = 0;
 
-        if (AlleReservierungen.reservierungenArrayList.size() == 0){
+//        if (AlleReservierungen.reservierungenArrayList.size() == 0){
+//            try {
+//                weiterReservieren(); //methode implementiert
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        for (int j = 0; j < AlleReservierungen.reservierungenArrayList.size(); j++) {
+//            hashkey = AlleReservierungen.reservierungenArrayList.get(j);
+//
+//
+//            check = AlleReservierungen.reservierungenHashMap.get(hashkey).getRaumnummer();
+//
+//            if (check.equals(raumnummerReservierungStr)) {
+//                zeitDatum = AlleReservierungen.reservierungenHashMap.get(hashkey).getDatum();
+//                zeitBeginn = AlleReservierungen.reservierungenHashMap.get(hashkey).getVon();
+//                zeitEnde = AlleReservierungen.reservierungenHashMap.get(hashkey).getBis();
+//
+//                dateiDatumAb = dateFormat.parse(zeitDatum + " " + zeitBeginn);
+//                dateiDatumBis = dateFormat.parse(zeitDatum + " " + zeitEnde);
+//
+//                if ((dateiDatumAb.after(datumAb) && dateiDatumAb.before(datumBis)) ||
+//                        (dateiDatumBis.after(datumAb) && dateiDatumBis.before(datumBis)) ||
+//                        (dateiDatumAb.before(datumAb) && dateiDatumBis.after(datumBis)) ||
+//                        dateiDatumAb.equals(datumAb) ||
+//                        dateiDatumBis.equals(datumBis)) {
+//                    fehlerDatum.setText("Der Raum ist zu diesem Zeitpunkt nicht verfügbar");
+//                    System.out.println("Klappt");
+//                    i++;
+//                    break;
+//                }
+//            }
+//
+//        }
+//        if (i == 0) {
+//            fehlerDatum.setText("");
+//            try {
+//                weiterReservieren(); //methode implementiert
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+
+
+
+        int menge = 0;
+
+        try (Connection con = DriverManager.getConnection(Datenbank.dbURL); Statement stmt = con.createStatement();) {
+            String checken = ("SELECT COUNT (*) AS Zaehler FROM dbo.Reservierungen");
+            ResultSet resultSet = stmt.executeQuery(checken);
+
+            if (resultSet.next()){
+                menge = resultSet.getInt("Zaehler");
+            }
+
+
+             } catch (SQLException e){
+             e.printStackTrace();
+        }
+
+        if (menge == 0){
             try {
                 weiterReservieren(); //methode implementiert
             } catch (IOException e) {
@@ -396,33 +488,35 @@ public class ControllerRaumReservierung {
             }
         }
 
-        for (int j = 0; j < AlleReservierungen.reservierungenArrayList.size(); j++) {
-            hashkey = AlleReservierungen.reservierungenArrayList.get(j);
 
+        try (Connection con = DriverManager.getConnection(Datenbank.dbURL); Statement stmt = con.createStatement();) {
+            String query = ("SELECT * FROM dbo.Reservierungen");
+            ResultSet resultSet = stmt.executeQuery(query);
 
-            check = AlleReservierungen.reservierungenHashMap.get(hashkey).getRaumnummer();
+            while  (resultSet.next()){
+                check = resultSet.getString("Raumnummer");
 
-            if (check.equals(raumnummerReservierungStr)) {
-                zeitDatum = AlleReservierungen.reservierungenHashMap.get(hashkey).getDatum();
-                zeitBeginn = AlleReservierungen.reservierungenHashMap.get(hashkey).getVon();
-                zeitEnde = AlleReservierungen.reservierungenHashMap.get(hashkey).getBis();
+                if (check.equals(raumnummerReservierungStr)){
+                    dateiDatumAb = resultSet.getDate("UhrzeitVon");
+                    dateiDatumBis = resultSet.getDate("UhrzeitBis");
 
-                dateiDatumAb = dateFormat.parse(zeitDatum + " " + zeitBeginn);
-                dateiDatumBis = dateFormat.parse(zeitDatum + " " + zeitEnde);
-
-                if ((dateiDatumAb.after(datumAb) && dateiDatumAb.before(datumBis)) ||
-                        (dateiDatumBis.after(datumAb) && dateiDatumBis.before(datumBis)) ||
-                        (dateiDatumAb.before(datumAb) && dateiDatumBis.after(datumBis)) ||
-                        dateiDatumAb.equals(datumAb) ||
-                        dateiDatumBis.equals(datumBis)) {
-                    fehlerDatum.setText("Der Raum ist zu diesem Zeitpunkt nicht verfügbar");
-                    System.out.println("Klappt");
-                    i++;
-                    break;
+                    if ((dateiDatumAb.after(datumAb) && dateiDatumAb.before(datumBis)) ||
+                            (dateiDatumBis.after(datumAb) && dateiDatumBis.before(datumBis)) ||
+                            (dateiDatumAb.before(datumAb) && dateiDatumBis.after(datumBis)) ||
+                            dateiDatumAb.equals(datumAb) ||
+                            dateiDatumBis.equals(datumBis)) {
+                        fehlerDatum.setText("Der Raum ist zu diesem Zeitpunkt nicht verfügbar");
+                        System.out.println("Klappt");
+                        i++;
+                        break;
+                    }
                 }
             }
 
+        } catch (SQLException e){
+            e.printStackTrace();
         }
+
         if (i == 0) {
             fehlerDatum.setText("");
             try {
@@ -431,23 +525,33 @@ public class ControllerRaumReservierung {
                 e.printStackTrace();
             }
         }
+
     }
 
 
-    private void reservierungInHashmap() throws FileNotFoundException {
-        String id;
-        File idScan = new File("src/start/resources/id.txt");
-        Scanner scan = new Scanner(idScan);
+    private void reservierungInDatenbank() throws FileNotFoundException {
 
-        id = scan.next();
-        String hashkey = raumnummerReservierungStr+id+datumReStr+abUhrzeit+bisUhrzeit;
+//        String hashkey = raumnummerReservierungStr+Mitarbeiter.idZwischenspeicher+datumReStr+abUhrzeit+bisUhrzeit;
+        SimpleDateFormat stringTyp = new SimpleDateFormat("yyyy.dd.MM HH:mm:ss");
+        String vonString = stringTyp.format(datumAb).toString();
+        String bisString = stringTyp.format(datumBis).toString();
 
-        AlleReservierungen alleReservierungen = new AlleReservierungen(raumnummerReservierungStr,id,datumReStr,abUhrzeit,bisUhrzeit);
 
-        AlleReservierungen.reservierungenHashMap.put(hashkey, alleReservierungen);
-        AlleReservierungen.reservierungenArrayList.add(hashkey);
+        Random r = new Random();
+        int ReservierungsID = r.nextInt(999999-10000) + 10000; //random zahl generieren
 
-        scan.close();
+        try (Connection connection = DriverManager.getConnection(Datenbank.dbURL); Statement statement = connection.createStatement();){
+
+            String speichern = "INSERT INTO dbo.Reservierungen "
+                    + "  (ReservierungsID, MitarbeiterID, Raumnummer, UhrzeitVon, UhrzeitBis) "
+                    +" values (' "+ReservierungsID+" ', ' "+ Mitarbeiter.idZwischenspeicher.get(0) +" ', "+raumnummerReservierungStr+", ' "+vonString+"', '"+bisString+"')";
+            //AB UHRZEIT UND BIS UHRZEIT FALSCHES FORMAT - 01.07. überarbeitet
+
+            statement.executeLargeUpdate(speichern);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 

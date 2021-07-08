@@ -1,38 +1,45 @@
 package start;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import start.normaleKlassen.Anfang;
 import start.normaleKlassen.CheckReservierung;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
     //---------------------------------Anfang der App--------------------------------------
     @Override
     public void init() throws Exception {
-        Anfang.anfang();
+//        Anfang.anfang();
     }
     //----------------------------------------------------------------------------------------
 
-    CheckReservierung checkReservierung = new CheckReservierung();
-    Thread t =  new Thread(checkReservierung);
 
     //--------------------------------------------------------------------------------------
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-       t.start();
-
         Parent root = FXMLLoader.load(getClass().getResource("/start/fxml/anmeldung.fxml"));
 
         primaryStage.setTitle("Reservierungssystem");
         primaryStage.setScene(new Scene(root, 1286, 750));
         primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
 
     }
     //--------------------------------------------------------------------------------------
@@ -40,17 +47,12 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        CheckReservierung chRes = new CheckReservierung();
+        new Thread(chRes).start();
         launch(args);
 
     }
 
-
-    @Override
-    public void stop() throws Exception {
-        Anfang.idLoeschen();
-        Anfang.hashmapInDatei();
-       t.interrupt();
-    }
 }
 
 

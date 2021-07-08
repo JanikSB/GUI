@@ -13,9 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import start.normaleKlassen.Datenbank;
 import start.normaleKlassen.Mitarbeiter;
 
 import java.io.*;
+import java.sql.*;
 import java.util.Scanner;
 
 public class ControllerRegistrierung {
@@ -136,35 +138,19 @@ public class ControllerRegistrierung {
     //-------------
     private void zusammengefasst(){
         idRandom();
-        mitarbeiterErstellen();
-        mitarbeiterInTextdatei();
-        idSpeichern();
+//        mitarbeiterErstellen();
+        MitarbeiterSpeichernData();
+        idZwischenspeichern();
     }
     //-------------
 
-    private void idSpeichern(){
-        File idDatei = new File("src/start/resources/id.txt");
 
-        try {
-            idDatei.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileWriter writer = null;
-
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/start/resources/id.txt", true)));
-            printWriter.println(id);
-            printWriter.flush();
-            printWriter.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    //neu:
+    private void idZwischenspeichern (){
+        Mitarbeiter.idZwischenspeicher.add(id);
     }
+
+
 
 
     //---------------------Random Mitarbeiter ID generieren-----------------
@@ -172,67 +158,54 @@ public class ControllerRegistrierung {
 
         do {
             id = (int) (Math.random() * 99999999 - 10000000) + 10000000;
-        }while (IdUeberpruefen().equals(false));
+        }while (idCheck() == 1);
 
 
     }
-    private static Boolean IdUeberpruefen(){
-        File mitarbeiter = new File("src/start/resources/MitarbeiterDatei.txt");
-        Scanner scan = null;
-        try {
-            scan = new Scanner(mitarbeiter);
-        } catch (FileNotFoundException e) {
+
+
+    private static int idCheck (){
+        int check = 0;
+
+        try (Connection con = DriverManager.getConnection(Datenbank.dbURL); Statement stmt = con.createStatement();) {
+            String checken = ("SELECT COUNT (*) AS Zaehler FROM dbo.Mitarbeiter WHERE MitarbeiterID = "+id);
+            ResultSet resultSet = stmt.executeQuery(checken);
+
+            check = resultSet.getInt("Zaehler");
+        } catch (SQLException e){
             e.printStackTrace();
         }
-        int ueberpruefung ;
-        boolean antwort = true;
 
-        while(scan.hasNextLine()) {
-            ueberpruefung = scan.nextInt();
-            scan.nextLine();
-
-            if(ueberpruefung == id){
-                antwort = false;
-            }
-        }
-
-        return  antwort;
+        return check;
     }
+
+
     //----------------------------------------------------------------------------
 
-    //----------------------neue Mitarbeiterinstanz per Konsole--------------
-    private  static void mitarbeiterErstellen() {
+//    //----------------------neue Mitarbeiterinstanz per Konsole--------------
+//    private  static void mitarbeiterErstellen() {
+//
+//        Mitarbeiter mitarbeiter = new Mitarbeiter(id, email, passwort);
+//        Mitarbeiter.mitarbeiterMap.put(mitarbeiter.getId(), mitarbeiter);
+//    }
+//    //-----------------------------------------------------------------------------
 
-        Mitarbeiter mitarbeiter = new Mitarbeiter(id, email, passwort);
-        Mitarbeiter.mitarbeiterMap.put(mitarbeiter.getId(), mitarbeiter);
-    }
-    //-----------------------------------------------------------------------------
 
 
-    //-------------------Mitarbeiter Info in txt Datei schreiben------------------
-    private static void mitarbeiterInTextdatei(){
+    private void MitarbeiterSpeichernData(){
 
-        File mitarbeiterDatei = new File("src/start/resources/MitarbeiterDatei.txt");
+        try (Connection connection = DriverManager.getConnection(Datenbank.dbURL); Statement statement = connection.createStatement();){
 
-        try {
-            mitarbeiterDatei.createNewFile();
-        } catch (IOException e) {
+            String speichern = "INSERT INTO dbo.Mitarbeiter "
+                    + "  (MitarbeiterID, EmailAdresse, Passwort) "
+                    +" values (' "+id+" ', ' "+email+" ', ' "+passwort+" ') ";
+
+            statement.executeLargeUpdate(speichern);
+
+        }catch (SQLException e){
             e.printStackTrace();
         }
 
-        FileWriter writer = null;
-
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(new BufferedWriter(new FileWriter("src/start/resources/MitarbeiterDatei.txt", true)));
-            printWriter.println(id+" "+id+" "+email+" "+passwort+" ");
-            printWriter.flush();
-            printWriter.close();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     //-------------------------------------------------------------------------------
 

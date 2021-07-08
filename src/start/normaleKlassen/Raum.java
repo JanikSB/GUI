@@ -15,7 +15,7 @@ public class Raum {
     String datumReservierungsende;
 
 
-    public static Map<Integer, Raum> raumMap = new HashMap  <Integer, Raum>();
+//    public static Map<Integer, Raum> raumMap = new HashMap  <Integer, Raum>();
 
 
     public Raum(int raumnummer, int anzahlPlaetze, String eigenschaften, boolean verfuegbarkeit) {
@@ -76,43 +76,43 @@ public class Raum {
         this.datumReservierungsende = datumReservierungsende;
     }
 
-    //------------------------------Räume einlesen----------------------------------------------
-    public static void hashmapRaumEinlesen(){
-
-        int hashkey;
-        int raumnummer;
-        int anzahlPlaetze;
-        String eigenschaften;
-        boolean verfuegbarkeit;
-
-        File RaumInfo = new File("src/start/resources/RaumDatei.txt");
-
-        try {
-            Scanner scan = new Scanner(RaumInfo);
-
-
-
-            //--------Raum Instanzen erstellen-------------------------------------
-            while(scan.hasNext()) {
-                hashkey = scan.nextInt();
-                raumnummer = scan.nextInt();
-                anzahlPlaetze = scan.nextInt();
-                eigenschaften = scan.next();
-                verfuegbarkeit = true;
-
-                Raum raum = new Raum(raumnummer, anzahlPlaetze, eigenschaften, verfuegbarkeit);
-
-
-
-                raumMap.put(hashkey, raum);
-            }
-            //------------------------------------------------------------------------------------
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    //----------------------------------------------------------------------------------------------
+//    //------------------------------Räume einlesen----------------------------------------------
+//    public static void hashmapRaumEinlesen(){
+//
+//        int hashkey;
+//        int raumnummer;
+//        int anzahlPlaetze;
+//        String eigenschaften;
+//        boolean verfuegbarkeit;
+//
+//        File RaumInfo = new File("src/start/resources/RaumDatei.txt");
+//
+//        try {
+//            Scanner scan = new Scanner(RaumInfo);
+//
+//
+//
+//            //--------Raum Instanzen erstellen-------------------------------------
+//            while(scan.hasNext()) {
+//                hashkey = scan.nextInt();
+//                raumnummer = scan.nextInt();
+//                anzahlPlaetze = scan.nextInt();
+//                eigenschaften = scan.next();
+//                verfuegbarkeit = true;
+//
+//                Raum raum = new Raum(raumnummer, anzahlPlaetze, eigenschaften, verfuegbarkeit);
+//
+//
+//
+//                raumMap.put(hashkey, raum);
+//            }
+//            //------------------------------------------------------------------------------------
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    //----------------------------------------------------------------------------------------------
 
 
 

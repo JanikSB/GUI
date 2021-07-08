@@ -3,6 +3,7 @@ package start.normaleKlassen;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -15,8 +16,10 @@ public class Mitarbeiter implements Serializable {
     private String passwort;
     private int raeume;
 
-    public static Map<Integer, Mitarbeiter> mitarbeiterMap = new HashMap<Integer, Mitarbeiter>();
+//    public static Map<Integer, Mitarbeiter> mitarbeiterMap = new HashMap<Integer, Mitarbeiter>();
 
+    //neu:
+    public static ArrayList <Integer> idZwischenspeicher = new ArrayList<>();
 
     public Mitarbeiter( int id, String email, String passwort) {
 
@@ -71,40 +74,40 @@ public class Mitarbeiter implements Serializable {
 
 
 
-    //---------------------Mitarbeiter einlesen---------------------------------------
-    public static void hashmapMitarbeiterEinlesen(){
-
-        int hashKey;
-        int id;
-        String email;
-        String passwort;
-        String reservierteRaeume;
-
-
-
-        File mitarbeiterInfo = new File("src/start/resources/MitarbeiterDatei.txt");
-        try {
-            Scanner scan = new Scanner(mitarbeiterInfo);
-
-
-
-            //--------Mitarbeiter Instanzen erstellen---------------------------
-            while(scan.hasNext()) {
-                hashKey = scan.nextInt();
-                id = scan.nextInt();
-                email = scan.next();
-                passwort = scan.next();
-
-                Mitarbeiter mitarbeiter = new Mitarbeiter(id,email,passwort);
-                mitarbeiterMap.put(hashKey, mitarbeiter);
-                scan.nextLine();
-            }
-            //-------------------------------------------------------------------
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-    //-----------------------------------------------------------------------------------
+//    //---------------------Mitarbeiter einlesen---------------------------------------
+//    public static void hashmapMitarbeiterEinlesen(){
+//
+//        int hashKey;
+//        int id;
+//        String email;
+//        String passwort;
+//        String reservierteRaeume;
+//
+//
+//
+//        File mitarbeiterInfo = new File("src/start/resources/MitarbeiterDatei.txt");
+//        try {
+//            Scanner scan = new Scanner(mitarbeiterInfo);
+//
+//
+//
+//            //--------Mitarbeiter Instanzen erstellen---------------------------
+//            while(scan.hasNext()) {
+//                hashKey = scan.nextInt();
+//                id = scan.nextInt();
+//                email = scan.next();
+//                passwort = scan.next();
+//
+//                Mitarbeiter mitarbeiter = new Mitarbeiter(id,email,passwort);
+//                mitarbeiterMap.put(hashKey, mitarbeiter);
+//                scan.nextLine();
+//            }
+//            //-------------------------------------------------------------------
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    //-----------------------------------------------------------------------------------
 
 }

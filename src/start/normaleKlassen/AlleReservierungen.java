@@ -17,11 +17,11 @@ public class AlleReservierungen {
 
 
 
-    //Array List um alle reservierungen ohne key auszugeben
-    public static ArrayList<String> reservierungenArrayList = new ArrayList<>();
-
-    //Hashmap um auf bestimmte Reservierungen zuzugreifen
-    public static HashMap<String, AlleReservierungen> reservierungenHashMap = new HashMap<>();
+//    //Array List um alle reservierungen ohne key auszugeben
+//    public static ArrayList<String> reservierungenArrayList = new ArrayList<>();
+//
+//    //Hashmap um auf bestimmte Reservierungen zuzugreifen
+//    public static HashMap<String, AlleReservierungen> reservierungenHashMap = new HashMap<>();
 
 
 
@@ -77,54 +77,54 @@ public class AlleReservierungen {
 
 
 
-    public static void hashmapReservierungEinlesen(){
-
-        String raumnummer;
-        String mitarbeiterId;
-        String datum;
-        String von;
-        String bis;
-
-        String hashkey;
-
-
-
-
-
-        //Reservierungen einlesen
-
-        File reservierungsListe = new File("src/start/resources/ReservierungenDatei.txt");
-
-        try {
-            Scanner scan = new Scanner(reservierungsListe);
-
-
-
-            //Reservierungsinstanzen erstellen
-            while (scan.hasNextLine()){
-                if (scan.hasNext()) {
-                    raumnummer = scan.next();
-                    mitarbeiterId = scan.next();
-                    datum = scan.next();
-                    von = scan.next();
-                    bis = scan.next();
-                    scan.hasNextLine();
-
-                    hashkey = raumnummer + mitarbeiterId + datum + von + bis;
-
-
-                    AlleReservierungen alleReservierungen = new AlleReservierungen(raumnummer, mitarbeiterId, datum, von, bis);
-
-
-                    reservierungenArrayList.add(hashkey);
-                    reservierungenHashMap.put(hashkey, alleReservierungen);
-                } else break;
-            }
-
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void hashmapReservierungEinlesen(){
+//
+//        String raumnummer;
+//        String mitarbeiterId;
+//        String datum;
+//        String von;
+//        String bis;
+//
+//        String hashkey;
+//
+//
+//
+//
+//
+//        //Reservierungen einlesen
+//
+//        File reservierungsListe = new File("src/start/resources/ReservierungenDatei.txt");
+//
+//        try {
+//            Scanner scan = new Scanner(reservierungsListe);
+//
+//
+//
+//            //Reservierungsinstanzen erstellen
+//            while (scan.hasNextLine()){
+//                if (scan.hasNext()) {
+//                    raumnummer = scan.next();
+//                    mitarbeiterId = scan.next();
+//                    datum = scan.next();
+//                    von = scan.next();
+//                    bis = scan.next();
+//                    scan.hasNextLine();
+//
+//                    hashkey = raumnummer + mitarbeiterId + datum + von + bis;
+//
+//
+//                    AlleReservierungen alleReservierungen = new AlleReservierungen(raumnummer, mitarbeiterId, datum, von, bis);
+//
+//
+//                    reservierungenArrayList.add(hashkey);
+//                    reservierungenHashMap.put(hashkey, alleReservierungen);
+//                } else break;
+//            }
+//
+//
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+// }
 }
